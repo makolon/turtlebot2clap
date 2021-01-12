@@ -27,7 +27,7 @@ for i in range(data_size[0]):
 class_pd = pd.DataFrame(list(class_dict.items(), columns=["labels", "classes"])
 
 # Load dataset
-def load_wave_data(audio_dir, file_name);
+def load_wave_data(audio_dir, file_name):
     file_path = os.path.join(audio_dir, file_name)
     x, fs = librosa.load(file_path, sr=44100)
     return x, fs

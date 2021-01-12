@@ -3,16 +3,12 @@
     <arg name  value/>
     <include>
     </include>
-
     <include>
     </include>
-  
-    <node pkg  type  name>
-	<arg > 
-    </node>
-
     <node pkg  type  name>
 	<arg >
     </node>
-     
+    <node pkg  type  name>
+	<arg >
+    </node>
 </launch>

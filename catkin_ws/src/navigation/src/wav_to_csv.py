@@ -18,7 +18,7 @@ if len(wavData.columns) == 2:
     print('Stereo .wav file\n')
     wavData.columns = ['R', 'L']
 
-    wavData.to_csv("/OutputCSV/" + str(input_filename[:-4] + "_Output_stereo.csv"), mode='w')
+    wavData.to_csv(str(input_filename[:-4] + "_Output_stereo.csv"), mode='w')
     print('Save id done ' + str(input_filename[:-4]) + '_Output_stereo.csv')
 
 elif len(wavData.columns) == 1:

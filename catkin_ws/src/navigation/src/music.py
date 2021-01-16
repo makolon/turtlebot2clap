@@ -16,7 +16,7 @@ class Music(object):
         self.data = self.data.drop(columns='Unnamed: 0')
         self.M = 2
         self.n = len(self.data)
-        self.res = 1000
+        self.res = 44100
         self.X = []
 
     def calc_R(self):
@@ -25,18 +25,23 @@ class Music(object):
         self.X = signal.hilbert(data.T)
         self.X = self.X.T
         R = [[0 for i in range(self.M)] for j in range(self.M)]
-
         for i in range(self.M):
             for j in range(self.M):
                 R_ij = 0
                 for k in range(self.n):
+		    # print(self.X[k, i])
                     R_ij += self.X[k, i] * np.conjugate(self.X[k, j])
-                R[i][j] = R_ij / self.n
-        return R
+                R[i][j] = R_ij.real / self.n
+	        # print(R[i][j])
+	print(R)        
+	return R
 
     def calc_spec(self, R):
         W, V = LA.eig(R)
-        E = V[:, 5:]
+        E = V[:, :]
+	print("W is :", W)
+	print("V is :", V)
+	print("E is :", E)
         div = np.pi / self.res
         start = - np.pi / 2
         music_spec = np.empty(self.res)
@@ -49,11 +54,14 @@ class Music(object):
                 a[i] = s
             a_el = a.reshape((1, self.M))
             a_el = np.conjugate(a_el)
+	    print(a_el)
             E_el = np.conjugate(E.T)
             numerator = np.dot(a_el, a)
             b_1 = np.dot(a_el, E)
             b_2 = np.dot(b_1, E_el)
-            denominator = np.dot(b_2, a) + 0.1
+            denominator = np.dot(b_2, a)
+	    # print("denominator is :", denominator)
+	    print("numerator is :", numerator)
             music_spec[x] = self.M * (np.log10(numerator.real/denominator.real))
             start += div
         return music_spec
@@ -74,8 +82,7 @@ class Music(object):
         plt.show()
 
 if __name__ == "__main__":
-    file_path = os.path.join(str(sys.path), "turtlebot2clap/catkin_ws/src/navigation/src/", "*.csv")
-    # number = 1128791
+    file_path = '/home/makolon/turtlebot2clap/catkin_ws/src/navigation/src/output_Output_stereo.csv'
     music = Music(file_path)
     R = music.calc_R()
     spec = music.calc_spec(R)

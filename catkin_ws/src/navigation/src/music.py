@@ -11,11 +11,11 @@ class Music(object):
     # TODO
     #   - adjust the number of self.res, which means resolution.
     #   - adjust csv file in order to load file 5 seconds.
-    def __init__(self, csvPath, number):
+    def __init__(self, csvPath):
         self.data = pd.read_csv(csvPath, engine='python')
         self.data = self.data.drop(columns='Unnamed: 0')
         self.M = 2
-        self.n = number
+        self.n = len(self.data)
         self.res = 1000
         self.X = []
 
@@ -58,7 +58,7 @@ class Music(object):
             start += div
         return music_spec
 
-    def likelihood_sound_direction(self, music_spec):
+    def max_likelihood_sound(self, music_spec):
         max_num = 0
         for i in range(len(music_spec)):
             if music_spec[i] > max_num:
@@ -75,10 +75,10 @@ class Music(object):
 
 if __name__ == "__main__":
     file_path = os.path.join(str(sys.path), "turtlebot2clap/catkin_ws/src/navigation/src/", "*.csv")
-    number = 1128791
-    music = Music(file_path, number)
+    # number = 1128791
+    music = Music(file_path)
     R = music.calc_R()
     spec = music.calc_spec(R)
-    direction = music.likelihood_sound_direction(spec)
+    direction = music.max_likelihood_sound(spec)
     print(direction)
     # music.plot_x(spec)

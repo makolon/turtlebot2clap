@@ -5,6 +5,7 @@ import pandas as pd
 import numpy.linalg as LA
 import math
 import sys
+import os
 
 class Music(object):
     # TODO
@@ -73,7 +74,7 @@ class Music(object):
         plt.show()
 
 if __name__ == "__main__":
-    file_path = '/home/makolon/turtlebot2clap/catkin_ws/src/navigation/src/sample_Output_stereo.csv'
+    file_path = os.path.join(str(sys.path), "turtlebot2clap/catkin_ws/src/navigation/src/", "*.csv")
     number = 1128791
     music = Music(file_path, number)
     R = music.calc_R()

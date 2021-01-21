@@ -67,7 +67,7 @@ set(navigation_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(navigation_SOURCE_PREFIX /home/makolon/turtlebot2clap/catkin_ws/src/navigation)
+  set(navigation_SOURCE_PREFIX /home/makolon/turtlebot2clap/catkin_ws/src/sound_detection)
   set(navigation_DEVEL_PREFIX /home/makolon/turtlebot2clap/catkin_ws/devel)
   set(navigation_INSTALL_PREFIX "")
   set(navigation_PREFIX ${navigation_DEVEL_PREFIX})
@@ -110,7 +110,7 @@ if(NOT " " STREQUAL " ")
         message(FATAL_ERROR "Project 'navigation' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'navigation' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/makolon/turtlebot2clap/catkin_ws/src/navigation/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'navigation' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/makolon/turtlebot2clap/catkin_ws/src/sound_detection/${idir}'.  ${_report}")
     endif()
     _list_append_unique(navigation_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/makolon/turtlebot2clap/catkin_ws/devel/lib;/home/makolon/catkin_ws/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /home/makolon/turtlebot2clap/catkin_ws/devel/lib;/home/makolon/xarm_docker/catkin_ws/devel/lib;/home/makolon/catkin_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

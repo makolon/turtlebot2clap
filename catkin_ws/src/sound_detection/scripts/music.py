@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import glob
 import numpy as np
 from scipy import signal
@@ -18,7 +19,7 @@ class Music(object):
         self.data = self.data.drop(columns='Unnamed: 0')
         self.M = 2
         self.n = len(self.data)
-        self.res = 44100
+        self.res = 16000
 
     def calc_R(self):
         data = self.data.iloc[0:self.n, :]
@@ -37,7 +38,7 @@ class Music(object):
         W, V = LA.eig(R)
         E = V[:, 1:]
         div = np.pi / self.res
-        start = -1 * np.pi / 2
+        start = -np.pi / 2
         music_spec = np.empty(self.res)
 
         for x in range(self.res):
@@ -106,14 +107,5 @@ if __name__ == "__main__":
         angles.append(angle)
         quaternions.append(quat)
         print("Amplitude is {}, and Angle is {}".format(amplitude, angle))
-        print("Quaternion is {}".format(quat))
+        # print("Quaternion is {}".format(quat))
     music.plot_x(spec)
-    """ test
-    file_path = "csvfile/sample_Output_stereo.csv"
-    music = Music(file_path)
-    R = music.calc_R()
-    spec = music.calc_spec(R)
-    direction = music.max_likelihood_sound(spec)
-    print(direction)
-    music.plot_x(spec)
-    """

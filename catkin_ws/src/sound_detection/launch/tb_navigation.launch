@@ -1,0 +1,11 @@
+<launch>
+    <arg name=  value/>
+    <arg name=  value/>
+    <include>
+    </include>
+    <include>
+    </include>
+    <node pkg="navigation" type="record.py"  name="recorder"/>
+    <node pkg="navigation"  type="wav2csv.py"  name="transformer"/>
+    <node pkg="navigation" type="music.py" name="music"/>
+</launch>

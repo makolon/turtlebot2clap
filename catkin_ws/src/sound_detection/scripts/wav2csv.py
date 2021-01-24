@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import rospy
 import sys
 import os
 import os
@@ -38,4 +39,5 @@ def wav2csv():
             print("Save is done " + str(input_filename[:-4]) + "_Output_multi_channel.csv")
 
 if __name__ == "__main__":
+    rospy.init_node("wav2csv")
     wav2csv()

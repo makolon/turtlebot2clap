@@ -8,6 +8,7 @@ import numpy.linalg as LA
 import math
 import sys
 import os
+import rospy
 
 class Music(object):
     # TODO
@@ -93,6 +94,7 @@ class Music(object):
         return q
 
 if __name__ == "__main__":
+    rospy.init_node("music")
     file_path = sorted(glob.glob("csvfile/*.csv"))
     amplitudes = []
     angles = []
@@ -108,4 +110,4 @@ if __name__ == "__main__":
         quaternions.append(quat)
         print("Amplitude is {}, and Angle is {}".format(amplitude, angle))
         # print("Quaternion is {}".format(quat))
-    music.plot_x(spec)
+    # music.plot_x(spec)

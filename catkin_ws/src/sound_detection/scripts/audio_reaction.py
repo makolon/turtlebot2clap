@@ -2,10 +2,51 @@
 import rospy
 import numpy as np
 import actionlib
+import time
+from smach import State, StateMachine
+
+from record import 
 from music import Music
 from move_goal import goal_pose
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from keras.models import load_model
+
+class Recording(State):
+    def __init__(self):
+        State.__init__(self, outcomes=["success"])
+
+    def execute(self, userdata):
+        print("Now I'm recording")
+        rospy.sleep(1.0)
+        record()
+
+class Wav2Csv(State):
+    def __init__(self):
+        State.__init__(self, outcomes=["success"])
+
+    def execute(self, userdata):
+        print("Now I'm tranfering wav data to csv data")
+
+class AudioClassification(State):
+    def __init__(self):
+        State.__init__(self, outcomes=["success"])
+
+    def execute(self, userdata):
+        print("Now I'm classificate the input audio data")
+
+class EstimateAngle(State):
+    def __init__(self):
+        State.__init__(self, outcomes=["success"])
+
+    def execute(self, userdata):
+        print("Now I'm running Music algorithm")
+
+class MoveGoal(State):
+    def __init__(self):
+        State.__init__(self, outcomes=["success"])
+
+    def execute(self, userdata):
+        print("Now I'm moving to the goal")
 
 def max_class(results):
     max_prob = 0

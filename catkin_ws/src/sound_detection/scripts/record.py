@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import pyaudio
 import wave
+import rospy
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -42,4 +43,5 @@ def Record():
         wf.close()
 
 if __name__ == "__main__":
+    rospy.init_node("record")
     Record()

@@ -17,7 +17,7 @@ def goal_pose(position, orientation):
     return goal_pose
 
 if __name__ == "__main__":
-    rospy.init_node("patrol")
+    rospy.init_node("move_goal")
     client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
     client.wait_for_server()
     while True:

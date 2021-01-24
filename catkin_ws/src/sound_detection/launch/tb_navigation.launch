@@ -3,9 +3,6 @@
     <arg name=  value/>
     <include>
     </include>
-    <include>
-    </include>
-    <node pkg="navigation" type="record.py"  name="recorder"/>
-    <node pkg="navigation"  type="wav2csv.py"  name="transformer"/>
-    <node pkg="navigation" type="music.py" name="music"/>
+    <include file="$(find turtlebot_teleop)/ />
+    <node pkg="sound_detection" type="audio_reaction.py"  name="audio_reaction"/>
 </launch>

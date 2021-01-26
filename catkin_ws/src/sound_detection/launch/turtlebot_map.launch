@@ -1,0 +1,15 @@
+<launch>
+  <param name="~MAPPING_FIN" value="false"/>
+  <arg name="flag" default="false"/>
+  <include file="$(find turtlebot_bringup)/launch/minimal.launch"/>
+  <include file="$(find turtlebot_teleop)/launch/ps3_teleop.launch"/>
+  <include file="$(find turtlebot_navigation)/launch/gmapping_demo.launch"/>
+  <node name="depth2scan" type="depthimage_to_laserscan" pkg="depthimage_to_laserscan">
+    <param name="scan_height" value="3"/>
+    <param name="output_frame_id" value="base_link"/>
+    <remap from="image" to="camera/sd/image_depth"/>
+  </node>
+  <include file="$(find turtlebot_rviz_launchers)/launch/view_navigation.launch"/>
+  <!-- <group if="$(arg flag)"> -->
+    <!-- <node name="map_saver" type="map_saver" pkg="map_server" args="-f /tmp/my_map"> -->
+</launch>

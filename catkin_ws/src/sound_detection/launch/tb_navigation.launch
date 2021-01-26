@@ -1,8 +1,0 @@
-<launch>
-    <arg name=  value/>
-    <arg name=  value/>
-    <include>
-    </include>
-    <include file="$(find turtlebot_teleop)/ />
-    <node pkg="sound_detection" type="audio_reaction.py"  name="audio_reaction"/>
-</launch>

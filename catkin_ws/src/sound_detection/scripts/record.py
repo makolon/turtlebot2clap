@@ -3,26 +3,26 @@ import pyaudio
 import wave
 import rospy
 
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
-CHANNELS = 2
-RATE = 16000 # Can kinect deal with 44100Hz?
-RECORD_SECONDS = 20
-SAMPLE_SECONDS = 5
-index = 4
+def Record():
+    CHUNK = 1024
+    FORMAT = pyaudio.paint16
+    CHANNELS = 2
+    RATE = 16000 # can kinect deal with 44100hz?
+    RECORD_SECONDS = 20
+    SAMPLE_SECONDS = 5
+    INDEX = 4
 
-p = pyaudio.PyAudio()
+    p = pyaudio.pyaudio()
 
-stream = p.open(format=FORMAT,
+    stream = p.open(format=FORMAT,
                 channels=CHANNELS,
                 rate=RATE,
                 input=True,
-                input_device_index=index,
+                input_device_index=INDEX,
                 frames_per_buffer=CHUNK)
 
-print("* recording")
+    print("* recording")
 
-def Record():
     for i in range(0, int(RECORD_SECONDS / SAMPLE_SECONDS)):
         frames = []
         WAVE_OUTPUT_FILENAME = "output" + str(i) + ".wav"

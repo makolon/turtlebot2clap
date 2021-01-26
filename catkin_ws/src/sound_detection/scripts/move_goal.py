@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from actionlib
+import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 def goal_pose(position, orientation):
@@ -21,6 +21,6 @@ if __name__ == "__main__":
     client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
     client.wait_for_server()
     while True:
-        goal = goal_pose(pose)
+        goal = goal_pose(pose, orn)
         client.send_goal(goal)
         client.wait_for_result()

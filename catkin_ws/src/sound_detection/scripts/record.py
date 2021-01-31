@@ -5,14 +5,14 @@ import rospy
 
 def Record():
     CHUNK = 1024
-    FORMAT = pyaudio.paint16
+    FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 16000 # can kinect deal with 44100hz?
     RECORD_SECONDS = 20
     SAMPLE_SECONDS = 5
     INDEX = 4
 
-    p = pyaudio.pyaudio()
+    p = pyaudio.PyAudio()
 
     stream = p.open(format=FORMAT,
                 channels=CHANNELS,

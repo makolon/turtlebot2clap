@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/makolon/turtlebot2clap/catkin_ws/devel/setup.sh
+    local-name: //home/makolon/turtlebot2clap/catkin_ws/devel/setup.sh

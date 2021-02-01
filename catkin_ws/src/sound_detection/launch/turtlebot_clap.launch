@@ -1,7 +1,7 @@
 <launch>
     <include file="$(find turtlebot_bringup)/launch/minimal.launch"/>
     <include file="$(find turtlebot_navigation)/launch/amcl_demo.launch">
-      <remap from="map_file" to="/tmp/my_map.yaml"/>
+      <remap from="map_file" to="/home/my_map.yaml"/>
     </include>
     <include file="$(find turtlebot_rviz_launchers)/launch/view_navigation.launch"/>
     <node pkg="sound_detection" type="audio_reaction.py" name="audio_reaction"/>

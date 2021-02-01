@@ -7,18 +7,18 @@ def Record():
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
-    RATE = 16000 # can kinect deal with 44100hz?
-    RECORD_SECONDS = 20
+    RATE = 16000
+    RECORD_SECONDS = 5
     SAMPLE_SECONDS = 5
     INDEX = 4
 
     p = pyaudio.PyAudio()
 
+    # Add input_device_index=INDEX
     stream = p.open(format=FORMAT,
                 channels=CHANNELS,
                 rate=RATE,
                 input=True,
-                input_device_index=INDEX,
                 frames_per_buffer=CHUNK)
 
     print("* recording")

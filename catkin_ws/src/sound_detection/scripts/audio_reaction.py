@@ -25,7 +25,7 @@ class Recording(State):
         print("Now I'm recording")
         rospy.sleep(1.0)
         Record()
-	return "success"
+        return "success"
 
 class Wav2Csv(State):
     def __init__(self):
@@ -35,7 +35,7 @@ class Wav2Csv(State):
         print("Now I'm transfering wav data to csv data")
         rospy.sleep(1.0)
         wav2csv()
-	return "success"
+        return "success"
 
 class AudioClassification(State):
     def __init__(self):
@@ -52,7 +52,7 @@ class AudioClassification(State):
             if class_id == 35:
                 return 'success'
             else:
-                pass
+                return 'failure'
 
 class EstimateAngle(State):
     def __init__(self):
@@ -84,10 +84,13 @@ class MoveGoal(State):
     def execute(self, userdata):
         print("Now I'm moving to the goal")
         client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        print(quaternions[0])
         client.wait_for_server()
-        direction = 2 # It's not accurate
+        distance = 2 # It's not accurate
         while True:
-	    position = [distance * np.cos(angles[0]*np.pi/180), distance * np.sin(angles[0]*np.pi/180), 0]
+            position = [distance * np.cos(angles[0]*np.pi/180), distance * np.sin(angles[0]*np.pi/180), 0]
+            print(position)
+            print(quaternions[0])
             goal = goal_pose(position, quaternions[0])
             client.send_goal(goal)
             result = client.wait_for_result()
@@ -96,10 +99,29 @@ class MoveGoal(State):
         else:
             return "failure"
 
+class MoveInitialState(State):
+    def __init__(self):
+        State.__init__(self, outcomes=["success"])
+
+    def execute(self, userdata):
+        print("Now I'm moving to the initial state")
+        client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        client.wait_for_server()
+        while True:
+            position = [0, 0, 0]
+            orientation = [0, 0, 0, 1]
+            goal = goal_pose(position, orientation)
+            client.send_goal(goal)
+            result = client.wait_for_result()
+        if result:
+            return "success"
+        else:
+            pass
+
 def max_class(results):
     max_prob = 0
     for i in range(len(results[0])):
-        if max_prob > results[0][i]:
+        if max_prob < results[0][i]:
             max_prob = results[0][i]
             max_class = i
     return max_class
@@ -118,34 +140,9 @@ def main():
         smach.StateMachine.add("Recording", Recording(), transitions={"success":"Wav2Csv"})
         smach.StateMachine.add("Wav2Csv", Wav2Csv(), transitions={"success":"EstimateAngle"})
         smach.StateMachine.add("EstimateAngle", EstimateAngle(), transitions={"success":"MoveGoal"})
-        smach.StateMachine.add("MoveGoal", MoveGoal(), transitions={"success":"succeeded", "failure":"Recording"})
+        smach.StateMachine.add("MoveGoal", MoveGoal(), transitions={"success":"MoveInitialState", "failure":"Recording"})
+        smach.StateMachine.add("MoveInitialState", MoveInitialState(), transitions={"success":"succeeded"})
     outcome = sm.execute()
 
 if __name__ == "__main__":
     main()
-"""
-if __name__ == "__main__":
-    rospy.init_node("audio_reaction")
-    file_path = sorted(glob.glob("csvfile/*.csv"))
-    # model = load_model("./models/esc50._105_0.8096_0.8200.hdf5")
-    for f in file_path:
-        results = model.predict(f)
-        class_id = max_class(results)
-        if class_id == 35:
-            music = Music()
-            R = music.calc_R()
-            spec = music.calc_spec(R)
-            amplitude, angle = music.max_likelihood_sound(spec)
-            orientation = music.quat_from_euler(angle)
-            distance = 5 # Is it accurate?
-            position = [distance * np.cos(angle*np.pi/180), distance * np.sin(angle*np.pi/180), 0]
-            client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
-            client.wait_for_server()
-            while True:
-                goal = goal_pose(position, orientation)
-                client.send_goal(goal)
-                client.wait_for_result()
-            break
-        else:
-            continue
-"""

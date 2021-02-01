@@ -69,6 +69,8 @@ class Music(object):
                 count = i
         music_direction = max_num
         max_angle = angle[count]
+        if max_angle < 0:
+            max_angle = 360 + max_angle
         return music_direction, max_angle
 
     def plot_x(self, music_spec):
